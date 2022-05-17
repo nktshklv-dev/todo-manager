@@ -19,6 +19,16 @@ class TripViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadTasks()
+    }
+    
+    private func loadTasks(){
+        sectionsTypesPosition.forEach{
+            typePosition in tasks[typePosition] = []
+        }
+        tasksStorage.loadTasks().forEach{
+            task in tasks[task.priority]?.append(task)
+        }
     }
 
     // MARK: - Table view data source
