@@ -12,16 +12,18 @@ protocol TaskStorageProtocol{
     func saveTasks(_ tasks: [TaskProtocol])
 }
 
+
+
+
 class TasksStorage: TaskStorageProtocol{
+    
     func loadTasks() -> [TaskProtocol] {
-        let testTasks = [Task(title: "Buy bread", type: .normal, status: .planned),
-                         Task(title: "Fuck some bitches", type: .important, status: .completed), Task(title: "Kill someine", type: .normal, status: .planned)]
+        let testTasks = [Task(title: "Buy bread", priority: .normal, status: .planned),
+                         Task(title: "Fuck some bitches", priority: .important, status: .completed), Task(title: "Kill someine", priority: .normal, status: .planned)]
         return testTasks
     }
     
     func saveTasks(_ tasks: [TaskProtocol]) {
-        print("BiptoFirst")
+        print("Bip")
     }
-    
-    
 }
