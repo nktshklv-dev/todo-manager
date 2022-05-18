@@ -19,7 +19,7 @@ class TripViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTasks()
+        loadTasks() 
     }
     
     private func loadTasks(){
@@ -34,25 +34,81 @@ class TripViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return tasks.count
     }
+    
+    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        let taskType = sectionsTypesPosition[section]
+        guard let currentTasksType = tasks[taskType] else{
+            return 0
+        }
+        return currentTasksType.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = getConfiguratedCell(for: indexPath)
 
-        // Configure the cell...
+       
 
         return cell
     }
-    */
-
+    
+    private func getConfiguratedCell(for indexPath: IndexPath) -> UITableViewCell{
+        // загружаем прототип ячейки по идентификатору
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
+        // получаем данные о задаче, которую необходимо вывести в ячейке
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let currentTask = tasks[taskType]?[indexPath.row] else{
+            return cell
+        }
+        let iconLabel = cell.viewWithTag(1) as? UILabel
+        let textLabel = cell.viewWithTag(2) as? UILabel
+        
+        iconLabel?.text = getIconForTask(with: currentTask.status)
+        textLabel?.text = currentTask.title
+        
+        if currentTask.status == .planned{
+            textLabel?.textColor = .black
+            iconLabel?.textColor = .black
+        }
+        else{
+            textLabel?.textColor = .lightGray
+            iconLabel?.textColor = .lightGray
+        }
+        return cell
+        
+    }
+    
+    
+    private func getIconForTask(with status: TaskStatus) -> String{
+        var resultSymbol: String = ""
+        if status == .planned{
+            resultSymbol = "\u{25CB}"
+        }
+        else if status == .completed{
+            resultSymbol = "\u{25C9}"
+        }
+        else{
+            resultSymbol = ""
+        }
+        return resultSymbol
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title: String?
+        let tasksType = sectionsTypesPosition[section]
+        if tasksType == .important{
+            title = "Important"
+        }
+        else if tasksType == .normal{
+            title = "Ordinary"
+        }
+        return title
+        
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
