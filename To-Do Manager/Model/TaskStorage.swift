@@ -8,22 +8,17 @@
 import Foundation
 
 protocol TaskStorageProtocol{
-    func loadTasks() -> [TaskProtocol]
-    func saveTasks(_ tasks: [TaskProtocol])
+     func loadTasks() -> [TaskProtocol]
+    func saveTasks(tasks: [TaskProtocol])
 }
 
-
-
-
-class TasksStorage: TaskStorageProtocol{
-    
+class TaskStorage: TaskStorageProtocol{
     func loadTasks() -> [TaskProtocol] {
-        let testTasks = [Task(title: "Buy bread", priority: .normal, status: .planned),
-                         Task(title: "Fuck some bitches", priority: .important, status: .completed), Task(title: "Kill someine", priority: .normal, status: .planned)]
-        return testTasks
+        let tasks = [Task(status: .planned, priority: .important, title: "Call mum"), Task(status: .planned, priority: .important, title: "Fuck Uliana"), Task(status: .planned, priority: .normal, title: "Go buy bread"), Task(status: .completed, priority: .normal, title: "Drink tea")]
+        return tasks
     }
-    
-    func saveTasks(_ tasks: [TaskProtocol]) {
-        print("Bip")
+
+     func saveTasks(tasks: [TaskProtocol]) {
+        print("Shit")
     }
 }

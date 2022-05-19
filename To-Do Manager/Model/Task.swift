@@ -17,15 +17,14 @@ enum TaskStatus{
     case completed
 }
 
-
 protocol TaskProtocol{
-    var title: String {get set}
-    var priority: TaskPriority {get set}
     var status: TaskStatus {get set}
+    var priority: TaskPriority {get set}
+    var title: String {get set}
 }
 
 struct Task: TaskProtocol{
-    var title: String
-    var priority: TaskPriority
     var status: TaskStatus
+    var priority: TaskPriority
+    var title: String
 }
