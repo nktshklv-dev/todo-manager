@@ -29,6 +29,12 @@ class TripViewController: UITableViewController {
         }
         tasksStorage.loadTasks().forEach{
             task in tasks[task.priority]?.append(task)
+           
+        }
+        for (taskPriority, tasksGroup) in tasks{
+            tasks[taskPriority] = tasksGroup.sorted{
+                task1, task2 in task1.status.rawValue > task2.status.rawValue
+            }
         }
     }
 
