@@ -14,7 +14,7 @@ protocol TaskStorageProtocol{
 
 class TaskStorage: TaskStorageProtocol{
     func loadTasks() -> [TaskProtocol] {
-        let tasks = [Task(status: .completed, priority: .important, title: "Call mum"), Task(status: .planned, priority: .important, title: "Fuck Uliana"), Task(status: .planned, priority: .normal, title: "buy bread"), Task(status: .completed, priority: .normal, title: "Drink tea")]
+        let tasks = [Task(status: .completed, priority: .important, title: "Call mum"), Task(status: .planned, priority: .important, title: "Fuck Uliana"), Task(status: .planned, priority: .normal, title: "buy bread"), Task(status: .completed, priority: .normal, title: "Drink tea"), Task(status: .planned, priority: .important, title: "Пригласить на вечеринку Дольфа, Джеки, Леонардо, Уилла и Брюса")]
         return tasks
     }
 

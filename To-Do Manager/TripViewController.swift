@@ -8,11 +8,22 @@
 import UIKit
 
 class TripViewController: UITableViewController {
+    
+    var tasksStatusPosition: [TaskStatus] = [.planned, .completed]
 
     //хранилище задач, методы load and save
     var tasksStorage: TaskStorageProtocol = TaskStorage()
     // коллекция задач
-    var tasks: [TaskPriority: [TaskProtocol]] = [:]
+    var tasks: [TaskPriority: [TaskProtocol]] = [:]{
+        didSet{
+            for (taskPriority, tasksGroup) in tasks{
+                tasks[taskPriority] = tasksGroup.sorted{
+                    task1, task2 in task1.status.rawValue > task2.status.rawValue
+                }
+            }
+            
+        }
+    }
     // порядок отображения секций по типам
     
     // индекс в массиве соответствует индексу секции в таблице
@@ -31,11 +42,7 @@ class TripViewController: UITableViewController {
             task in tasks[task.priority]?.append(task)
            
         }
-        for (taskPriority, tasksGroup) in tasks{
-            tasks[taskPriority] = tasksGroup.sorted{
-                task1, task2 in task1.status.rawValue > task2.status.rawValue
-            }
-        }
+
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -54,11 +61,11 @@ class TripViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = getConfiguratedCell(for: indexPath)
+       let cell = getConfiguratedCell_customClass(for: indexPath)
         return cell
     }
-    
-    private func getConfiguratedCell(for indexPath: IndexPath) -> UITableViewCell{
+    //первый способ
+    private func getConfiguratedCell_constraints(for indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
         
         let type = sectionsTypesPosition[indexPath.section]
@@ -83,6 +90,34 @@ class TripViewController: UITableViewController {
         return cell
         
     }
+    
+    
+    
+    
+    //второй способ
+    private func getConfiguratedCell_customClass(for indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellStack", for: indexPath) as! TaskCell
+        
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let currentTask = tasks[taskType]?[indexPath.row] else{
+            return cell
+        }
+        
+        cell.title.text = currentTask.title
+        cell.icon.text = getIconForTask(with: currentTask.status)
+        
+        if currentTask.status == .planned{
+            cell.title.textColor = .black
+            cell.icon.textColor = .black
+        }
+        else if currentTask.status == .completed{
+            cell.title.textColor = .lightGray
+            cell.icon.textColor = .lightGray
+        }
+        return cell
+        
+    }
+    
     
     private func getIconForTask(with status: TaskStatus) -> String{
         var resultSymbol: String = ""
@@ -109,5 +144,44 @@ class TripViewController: UITableViewController {
         }
         return title
         
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 1. Проверяем существование задачи
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        guard let _ = tasks[taskType]?[indexPath.row] else{
+            return
+        }
+        // 2. Убеждаемся, что задача не является выполненной
+        
+        guard tasks[taskType]![indexPath.row].status == .planned
+        else{
+           tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        // 3. Отмечаем задачу как выполненную
+        tasks[taskType]?[indexPath.row].status = .completed
+        // 4. Перезагружаем секцию таблицы
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else{
+            return nil
+        }
+        guard tasks[taskType]![indexPath.row].status == .completed else{
+            return nil
+        }
+        
+        let swipeAction = UIContextualAction(style: .normal, title: "Planned", handler: {_,_,_ in self.tasks[taskType]![indexPath.row].status = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            
+        })
+        
+        return UISwipeActionsConfiguration(actions: [swipeAction])
     }
 }
