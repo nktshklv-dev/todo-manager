@@ -146,20 +146,22 @@ class TripViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
+        //проверяем существует ли вообще такая задача
         let taskType = sectionsTypesPosition[indexPath.section]
         guard let _ = tasks[taskType]?[indexPath.row] else{
             return
         }
-        
+        //проверяем является ли данная задача запланированной
         guard tasks[taskType]?[indexPath.row].status == .planned else{
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        
+        //делаем задачу выполненной
         tasks[taskType]![indexPath.row].status = .completed
-        
+        //перезагружаем таблицу
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         
     }
+    
+    
 }
