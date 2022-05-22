@@ -29,7 +29,8 @@ class TripViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTasks() 
+        loadTasks()
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     //добавление задач в массив задач tasks
     private func loadTasks(){
@@ -183,5 +184,11 @@ class TripViewController: UITableViewController {
         
         return UISwipeActionsConfiguration(actions: [action])
         
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        tasks[taskType]?.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
 }

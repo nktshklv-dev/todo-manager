@@ -56,7 +56,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zpJ-Ax-aqb">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="zpJ-Ax-aqb">
                                             <rect key="frame" x="20" y="11" width="374" height="21"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V85-kz-8Vl">
@@ -75,6 +75,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="V85-kz-8Vl" firstAttribute="top" secondItem="zpJ-Ax-aqb" secondAttribute="top" id="O1g-Kt-MMg"/>
+                                                <constraint firstAttribute="bottom" secondItem="JTw-Zv-yt4" secondAttribute="bottom" id="Zlw-UL-rS1"/>
+                                                <constraint firstItem="JTw-Zv-yt4" firstAttribute="top" secondItem="zpJ-Ax-aqb" secondAttribute="top" id="eae-L4-wAw"/>
+                                                <constraint firstAttribute="trailing" secondItem="JTw-Zv-yt4" secondAttribute="trailing" id="iRu-v7-ghJ"/>
+                                                <constraint firstAttribute="bottom" secondItem="V85-kz-8Vl" secondAttribute="bottom" id="vTb-wt-QwZ"/>
+                                                <constraint firstItem="V85-kz-8Vl" firstAttribute="leading" secondItem="zpJ-Ax-aqb" secondAttribute="leading" id="vrJ-ex-SXN"/>
+                                                <constraint firstItem="JTw-Zv-yt4" firstAttribute="leading" secondItem="V85-kz-8Vl" secondAttribute="trailing" constant="10" id="wiT-ug-Avt"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
