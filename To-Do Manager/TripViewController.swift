@@ -147,48 +147,66 @@ class TripViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //проверяем существует ли вообще такая задача
-        let taskType = sectionsTypesPosition[indexPath.section]
-        guard let _ = tasks[taskType]?[indexPath.row] else{
+        let type = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[type]?[indexPath.row] else{
             return
         }
-        //проверяем является ли данная задача запланированной
-        guard tasks[taskType]?[indexPath.row].status == .planned else{
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        //делаем задачу выполненной
-        tasks[taskType]![indexPath.row].status = .completed
-        //перезагружаем таблицу
-        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         
+        guard tasks[type]![indexPath.row].status == .planned else{
+            return
+        }
+        
+        tasks[type]![indexPath.row].status = .completed
+        tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let taskType = sectionsTypesPosition[indexPath.section]
-        guard let _ = tasks[taskType]?[indexPath.row] else{
+        let type = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[type]?[indexPath.row] else{
             return nil
         }
         
-        guard tasks[taskType]![indexPath.row].status == .completed else{
+        guard tasks[type]![indexPath.row].status == .completed else{
             return nil
         }
         
-        
-        let action = UIContextualAction(style: .normal, title: "Plan", handler: {_,_,_ in
-            self.tasks[taskType]![indexPath.row].status = .planned
+        let action = UIContextualAction(style: .normal, title: "Plan", handler: {
+            _,_,_ in self.tasks[type]![indexPath.row].status = .planned
             tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
-            
         })
-      
         
         return UISwipeActionsConfiguration(actions: [action])
-        
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let taskType = sectionsTypesPosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // секция, из которой происходит перемещение
+        let taskTypeFrom = sectionsTypesPosition[sourceIndexPath.section]
+        // секция, в которую происходит перемещение
+        let taskTypeTo = sectionsTypesPosition[destinationIndexPath.section]
+        // безопасно извлекаем задачу, тем самым копируем ее
+        guard let movedTask = tasks[taskTypeFrom]?[sourceIndexPath.row] else{
+            return
+        }
+        // удаляем задачу с места, от куда она перенесена
+        tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
+        // вставляем задачу на новую позицию
+        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndexPath.row)
+        // если секция изменилась, изменяем тип задачи в соответствии с новой
+        //позицией
+        if taskTypeFrom != taskTypeTo{
+            tasks[taskTypeTo]![destinationIndexPath.row].priority = taskTypeTo
+        }
+        // обновляем данные
+        tableView.reloadData()
     }
 }
