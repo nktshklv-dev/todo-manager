@@ -31,6 +31,7 @@ class TripViewController: UITableViewController {
         super.viewDidLoad()
         loadTasks()
         navigationItem.leftBarButtonItem = editButtonItem
+        
     }
     //добавление задач в массив задач tasks
     private func loadTasks(){
@@ -63,34 +64,7 @@ class TripViewController: UITableViewController {
        let cell = getConfiguratedCell_customClass(for: indexPath)
         return cell
     }
-//первый способ
-//    private func getConfiguratedCell_constraints(for indexPath: IndexPath) -> UITableViewCell{
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
-//
-//        let type = sectionsTypesPosition[indexPath.section]
-//        guard let currentTask = tasks[type]?[indexPath.row] else{
-//            return cell
-//        }
-//
-//        let textLabel = cell.viewWithTag(2) as? UILabel
-//        let iconLabel = cell.viewWithTag(1) as? UILabel
-//
-//        iconLabel?.text = getIconForTask(with: currentTask.status)
-//        textLabel?.text = currentTask.title
-//
-//        if currentTask.status == .planned{
-//            iconLabel?.textColor = .black
-//            textLabel?.textColor = .black
-//        }
-//        else if currentTask.status == .completed{
-//            iconLabel?.textColor = .lightGray
-//            textLabel?.textColor = .lightGray
-//        }
-//        return cell
-//
-//    }
-//
-    
+ 
     
     
     //второй способ
@@ -146,38 +120,39 @@ class TripViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let type = sectionsTypesPosition[indexPath.section]
-        guard let _ = tasks[type]?[indexPath.row] else{
+        let taskType = sectionsTypesPosition[indexPath.section]
+        guard let _ = tasks[taskType]?[indexPath.row] else {
             return
         }
         
-        guard tasks[type]![indexPath.row].status == .planned else{
+        guard tasks[taskType]![indexPath.row].status == .planned else{
+            tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         
-        tasks[type]![indexPath.row].status = .completed
+        tasks[taskType]![indexPath.row].status = .completed
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
     }
     
+    
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let type = sectionsTypesPosition[indexPath.section]
-        guard let _ = tasks[type]?[indexPath.row] else{
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        guard let _ = tasks[taskType]?[indexPath.row] else{
             return nil
         }
         
-        guard tasks[type]![indexPath.row].status == .completed else{
+        guard tasks[taskType]![indexPath.row].status == .completed else{
             return nil
         }
         
         let action = UIContextualAction(style: .normal, title: "Plan", handler: {
-            _,_,_ in self.tasks[type]![indexPath.row].status = .planned
-            tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+            _,_,_ in self.tasks[taskType]![indexPath.row].status = .planned
+            self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         })
         
         return UISwipeActionsConfiguration(actions: [action])
     }
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let taskType = sectionsTypesPosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
