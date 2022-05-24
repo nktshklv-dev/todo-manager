@@ -159,4 +159,26 @@ class TripViewController: UITableViewController {
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let sourceType = sectionsTypesPosition[sourceIndexPath.section]
+        let destinationType = sectionsTypesPosition[destinationIndexPath.section]
+        
+        guard let movedTask = tasks[sourceType]?[sourceIndexPath.row] else{
+            return
+        }
+        
+        tasks[sourceType]?.remove(at: sourceIndexPath.row)
+        tasks[destinationType]?.insert(movedTask, at: destinationIndexPath.row)
+        
+        if sourceType != destinationType{
+            tasks[destinationType]![destinationIndexPath.row].priority = destinationType
+        }
+        tableView.reloadData()
+    }
+    
 }
