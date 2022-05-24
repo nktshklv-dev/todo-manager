@@ -150,15 +150,28 @@
                             <tableViewSection id="oGO-cv-tZd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hii-XE-im7">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="56.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hii-XE-im7" id="uPe-QI-saB">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="56.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Task Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zlu-5H-grE">
+                                                    <rect key="frame" x="20" y="11" width="374" height="34.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="zlu-5H-grE" secondAttribute="trailing" id="4gt-UU-uiW"/>
+                                                <constraint firstItem="zlu-5H-grE" firstAttribute="leading" secondItem="uPe-QI-saB" secondAttribute="leadingMargin" id="NHh-2x-6Mb"/>
+                                                <constraint firstItem="zlu-5H-grE" firstAttribute="top" secondItem="uPe-QI-saB" secondAttribute="topMargin" id="gch-or-Oah"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="zlu-5H-grE" secondAttribute="bottom" id="oed-ca-TsP"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iaB-Ma-abz">
-                                        <rect key="frame" x="0.0" y="61.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="74.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iaB-Ma-abz" id="rhK-qk-40a">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -166,7 +179,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="V7U-yr-lVH">
-                                        <rect key="frame" x="0.0" y="105" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="118" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="V7U-yr-lVH" id="Mud-ev-w59">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -182,6 +195,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="icY-P2-UHs"/>
+                    <connections>
+                        <outlet property="taskTitle" destination="zlu-5H-grE" id="MDY-zC-wXk"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="beE-RN-Pyp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
