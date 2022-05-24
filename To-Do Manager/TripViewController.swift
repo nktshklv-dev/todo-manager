@@ -156,32 +156,7 @@ class TripViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let taskType = sectionsTypesPosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        // секция, из которой происходит перемещение
-        let taskTypeFrom = sectionsTypesPosition[sourceIndexPath.section]
-        // секция, в которую происходит перемещение
-        let taskTypeTo = sectionsTypesPosition[destinationIndexPath.section]
-        // безопасно извлекаем задачу, тем самым копируем ее
-        guard let movedTask = tasks[taskTypeFrom]?[sourceIndexPath.row] else{
-            return
-        }
-        // удаляем задачу с места, от куда она перенесена
-        tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
-        // вставляем задачу на новую позицию
-        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndexPath.row)
-        // если секция изменилась, изменяем тип задачи в соответствии с новой
-        //позицией
-        if taskTypeFrom != taskTypeTo{
-            tasks[taskTypeTo]![destinationIndexPath.row].priority = taskTypeTo
-        }
-        // обновляем данные
-        tableView.reloadData()
-    }
 }
