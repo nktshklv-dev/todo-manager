@@ -170,13 +170,38 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iaB-Ma-abz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iaB-Ma-abz">
                                         <rect key="frame" x="0.0" y="74.5" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iaB-Ma-abz" id="rhK-qk-40a">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Task Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-Wb-Av4">
+                                                    <rect key="frame" x="20" y="11" width="77" height="21.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjN-f9-yMI">
+                                                    <rect key="frame" x="97" y="11.5" width="280.5" height="21"/>
+                                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                    <color key="textColor" systemColor="systemGrayColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0V7-Wb-Av4" firstAttribute="top" secondItem="rhK-qk-40a" secondAttribute="topMargin" id="7dc-x5-GZQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="JjN-f9-yMI" secondAttribute="trailing" id="E39-bq-sCT"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="0V7-Wb-Av4" secondAttribute="bottom" id="OH8-re-LzM"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="JjN-f9-yMI" secondAttribute="bottom" id="SHw-8w-3MX"/>
+                                                <constraint firstItem="JjN-f9-yMI" firstAttribute="leading" secondItem="0V7-Wb-Av4" secondAttribute="trailing" id="axU-FA-ySw"/>
+                                                <constraint firstItem="0V7-Wb-Av4" firstAttribute="leading" secondItem="rhK-qk-40a" secondAttribute="leadingMargin" id="o0e-lt-BkO"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="2Sy-8r-Y3j" kind="show" id="WiD-9i-TJ7"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="V7U-yr-lVH">
                                         <rect key="frame" x="0.0" y="118" width="414" height="43.5"/>
@@ -197,16 +222,41 @@
                     <navigationItem key="navigationItem" id="icY-P2-UHs"/>
                     <connections>
                         <outlet property="taskTitle" destination="zlu-5H-grE" id="MDY-zC-wXk"/>
+                        <outlet property="taskTypeLabel" destination="JjN-f9-yMI" id="Xes-Ea-JUG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="beE-RN-Pyp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2219" y="173"/>
+            <point key="canvasLocation" x="2357" y="173"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="KRW-KY-wVk">
+            <objects>
+                <tableViewController id="2Sy-8r-Y3j" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="LTI-lX-JL9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="separatorColor" systemColor="systemGroupedBackgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" systemColor="systemGroupedBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="2Sy-8r-Y3j" id="dMp-ha-kuk"/>
+                            <outlet property="delegate" destination="2Sy-8r-Y3j" id="Lo8-k5-fFv"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Vmn-Ml-VnD"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lta-jT-AGZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3299" y="173"/>
         </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

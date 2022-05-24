@@ -15,6 +15,7 @@
 		1171F8B62834293A00FE6412 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171F8B52834293A00FE6412 /* TripViewController.swift */; };
 		1171F8B82834367F00FE6412 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1171F8B72834367F00FE6412 /* TaskCell.swift */; };
 		118E45F7283D6B9E001F9FEA /* TaskEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E45F6283D6B9E001F9FEA /* TaskEditController.swift */; };
+		118E45F9283D8444001F9FEA /* TaskTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118E45F8283D8444001F9FEA /* TaskTypeController.swift */; };
 		11E867972832A5E500FCE3EC /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E867962832A5E500FCE3EC /* Task.swift */; };
 		11E867992832A6C900FCE3EC /* TaskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E867982832A6C900FCE3EC /* TaskStorage.swift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		1171F8B52834293A00FE6412 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		1171F8B72834367F00FE6412 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		118E45F6283D6B9E001F9FEA /* TaskEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditController.swift; sourceTree = "<group>"; };
+		118E45F8283D8444001F9FEA /* TaskTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTypeController.swift; sourceTree = "<group>"; };
 		11E867962832A5E500FCE3EC /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		11E867982832A6C900FCE3EC /* TaskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +72,7 @@
 				111ADA4E2831A20600874108 /* SceneDelegate.swift */,
 				111ADA522831A20600874108 /* Main.storyboard */,
 				118E45F6283D6B9E001F9FEA /* TaskEditController.swift */,
+				118E45F8283D8444001F9FEA /* TaskTypeController.swift */,
 				1171F8B52834293A00FE6412 /* TripViewController.swift */,
 				111ADA552831A20800874108 /* Assets.xcassets */,
 				111ADA572831A20800874108 /* LaunchScreen.storyboard */,
@@ -178,6 +181,7 @@
 				111ADA4D2831A20600874108 /* AppDelegate.swift in Sources */,
 				11E867992832A6C900FCE3EC /* TaskStorage.swift in Sources */,
 				1171F8B62834293A00FE6412 /* TripViewController.swift in Sources */,
+				118E45F9283D8444001F9FEA /* TaskTypeController.swift in Sources */,
 				1171F8B82834367F00FE6412 /* TaskCell.swift in Sources */,
 				111ADA4F2831A20600874108 /* SceneDelegate.swift in Sources */,
 				118E45F7283D6B9E001F9FEA /* TaskEditController.swift in Sources */,
