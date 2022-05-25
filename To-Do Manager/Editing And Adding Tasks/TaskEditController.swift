@@ -9,27 +9,29 @@ import UIKit
 
 class TaskEditController: UITableViewController {
     
-  
-
-    @IBOutlet var taskTitle: UITextField!
-    
-    @IBOutlet var taskTypeLabel: UILabel!
-    
-    private var taskTitles: [TaskPriority: String] = [ .important: "Important", .normal: "Ordinary"]
-    
     
     var taskText:String = ""
     var taskType:TaskPriority = .normal
     var taskStatus: TaskStatus = .planned
     
-    
     var doAfterEdit: ((String, TaskPriority, TaskStatus) -> Void)?
+    
+
+    @IBOutlet var taskTitle: UITextField!
+    
+    @IBOutlet var taskTypeLabel: UILabel!
+    
+    private var taskTypes: [TaskPriority: String] = [ .important: "Important", .normal: "Ordinary"]
+    
+    
+    
+  
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        taskTitle.text = taskText
-        taskTypeLabel.text = taskTitles[taskType]
+        taskTitle?.text = taskText
+        taskTypeLabel.text = taskTypes[taskType]
       
     }
 
