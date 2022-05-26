@@ -9,12 +9,12 @@ import UIKit
 
 class TaskTypeController: UITableViewController {
     
-    // 1. кортеж, описывающий тип задачи
+
     typealias TypeCellDescription = (type: TaskPriority, title: String, description: String)
     
     // 2. коллекция доступных типов задач с их описанием
      var taskTypesInformation: [TypeCellDescription] = [
-        (type: .important, title: "Important", description: "This type is the most important for doing. All the important tasks are displayed in the first section."), (type: .normal, title: "Normal", description: "Tasks with an ordinary priority.")]
+        (type: .important, title: "Important", description: ".All the important tasks are displayed in the first section."), (type: .normal, title: "Normal", description: "Tasks with an ordinary priority are displayed above the important section")]
     
     var selectedType: TaskPriority = .normal
     
