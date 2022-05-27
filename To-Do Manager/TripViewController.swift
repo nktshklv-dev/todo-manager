@@ -11,7 +11,7 @@ class TripViewController: UITableViewController {
     
     //хранилище задач, методы load and save
     var tasksStorage: TaskStorageProtocol = TaskStorage()
-    // коллекция задач
+    // коллекция задач ( пустая)
     var tasks: [TaskPriority: [TaskProtocol]] = [:]{
         didSet{
             for (taskPriority, tasksGroup) in tasks{
@@ -120,8 +120,9 @@ class TripViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
         let taskType = sectionsTypesPosition[indexPath.section]
-        guard let _ = tasks[taskType]?[indexPath.row] else {
+        guard let _ = tasks[taskType]?[indexPath.row] else{
             return
         }
         
@@ -130,55 +131,83 @@ class TripViewController: UITableViewController {
             return
         }
         
-        tasks[taskType]![indexPath.row].status = .completed
+        tasks[taskType]?[indexPath.row].status = .completed
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
+        
+        
     }
     
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let taskType = sectionsTypesPosition[indexPath.section]
-        
         guard let _ = tasks[taskType]?[indexPath.row] else{
             return nil
         }
-        
-        guard tasks[taskType]![indexPath.row].status == .completed else{
-            return nil
-        }
-        
-        let action = UIContextualAction(style: .normal, title: "Plan", handler: {
-            _,_,_ in self.tasks[taskType]![indexPath.row].status = .planned
+        let actionSwipeForPlanned = UIContextualAction(style: .normal, title: "Plan", handler: {
+            _,_,_ in
+            self.tasks[taskType]![indexPath.row].status = .planned
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         })
         
-        return UISwipeActionsConfiguration(actions: [action])
+        let actionSwipeForEdit = UIContextualAction(style: .normal, title: "Edit", handler: {_,_,_ in
+            let editScreen = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "taskEditController") as! TaskEditController
+            editScreen.taskText = self.tasks[taskType]![indexPath.row].title
+            editScreen.taskType = self.tasks[taskType]![indexPath.row].priority
+            editScreen.taskStatus = self.tasks[taskType]![indexPath.row].status
+            editScreen.doAfterEdit = {title,  type, status in
+                let editedTask = Task(status: status, priority: type, title: title)
+                self.tasks[taskType]![indexPath.row] = editedTask
+                tableView.reloadData()
+               
+            }
+            self.navigationController?.pushViewController(editScreen, animated: true)
+        })
+        actionSwipeForPlanned.backgroundColor = .blue
+        actionSwipeForEdit.backgroundColor = .orange
+        let actionsConfiguration: UISwipeActionsConfiguration
+        if tasks[taskType]![indexPath.row].status == .planned{
+            actionsConfiguration = UISwipeActionsConfiguration(actions: [actionSwipeForEdit])
+        }
+        else {
+            actionsConfiguration = UISwipeActionsConfiguration(actions: [actionSwipeForPlanned, actionSwipeForEdit])
+        }
+        return actionsConfiguration
     }
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let taskType = sectionsTypesPosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let sourceType = sectionsTypesPosition[sourceIndexPath.section]
         let destinationType = sectionsTypesPosition[destinationIndexPath.section]
-        
-        guard let movedTask = tasks[sourceType]?[sourceIndexPath.row] else{
+        guard let task = tasks[sourceType]?[sourceIndexPath.row] else{
             return
         }
-        
         tasks[sourceType]?.remove(at: sourceIndexPath.row)
-        tasks[destinationType]?.insert(movedTask, at: destinationIndexPath.row)
+        tasks[destinationType]?.insert(task, at: destinationIndexPath.row)
         
         if sourceType != destinationType{
-            tasks[destinationType]![destinationIndexPath.row].priority = destinationType
+            tasks[destinationType]?[destinationIndexPath.row].priority = destinationType
         }
         tableView.reloadData()
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCreateScene"{
+            let destination = segue.destination as! TaskEditController
+            destination.doAfterEdit = {
+                title, type, status in let newTask = Task(status: status, priority: type, title: title)
+                self.tasks[type]?.append(newTask)
+                self.tableView.reloadData()
+            }
+        }
     }
     
 }
