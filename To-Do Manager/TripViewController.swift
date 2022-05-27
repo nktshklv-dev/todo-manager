@@ -20,6 +20,12 @@ class TripViewController: UITableViewController {
                 }
             }
             
+            var savingArray:[TaskProtocol] = []
+            tasks.forEach{
+                _, value in savingArray += value
+            }
+            tasksStorage.saveTasks(tasks: savingArray)
+            
         }
     }
     // порядок отображения секций по типам
@@ -43,6 +49,16 @@ class TripViewController: UITableViewController {
            
         }
 
+    }
+    
+    func setTasks(_ taskCollection: [TaskProtocol]){
+        sectionsTypesPosition.forEach{
+            taskType in tasks[taskType] = []
+        }
+        taskCollection.forEach{
+            task in tasks[task.priority]?.append(task)
+        }
+        
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
